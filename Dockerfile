@@ -147,6 +147,9 @@ RUN echo "exec su - web" > /root/.bashrc && \
 # Download RetroSeller, Update and General Models
 RUN git clone https://github.com/louisvarley/RetroSeller /var/www/html
 
+RUN chown -r www-data:www-data /var/www/html
+RUN chmod -R 774 /var/www
+
 WORKDIR /var/www/html
 RUN cd /var/www/html
 
@@ -184,14 +187,9 @@ RUN echo "<?php\n" \
 
 RUN mkdir /var/www/html/core/Proxies
 RUN chown -R web:www-data /var/www/html/core/Proxies
-RUN chmod -R 777 /var/www/html/core/Proxies
+RUN chmod -R 774 /var/www/html/core/Proxies
 
 # Set and run a custom entrypoint
 COPY core/docker-entrypoint.sh /
 RUN chmod 777 /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
-
-# CMD ["cat", "/etc/apache2/envvars"]
-# CMD ["sed", "-n", "39p", "/etc/apache2/apache2.conf"]
-
-

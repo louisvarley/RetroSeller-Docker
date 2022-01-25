@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  retroseller:
+    container_name: retroseller
+    image: retroseller:latest
+    depends_on:
+      - mysql
+    ports:
+      - 9092:80
+    environment:
+      - RETROSELLER_SQL_HOST=mysql
+      - RETROSELLER_SQL_NAME=retroseller
+      - RETROSELLER_SQL_USER=admin@admin.com
+      - RETROSELLER_SQL_PASSWORD=retroseller  
+  mysql:
+    container_name: retroseller-mysql
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=retroseller
+      - MYSQL_USER=retroseller
+      - MYSQL_PASSWORD=retroseller
+      - MYSQL_ROOT_PASSWORD=retroseller
+    volumes:
+      - mysql:/var/lib/mysql
+
+volumes:
+  mysql:

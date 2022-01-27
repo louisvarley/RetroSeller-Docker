@@ -41,7 +41,6 @@ RUN apt-get clean && apt-get update && apt-get install --fix-missing -y \
   libssl-dev \
   libonig-dev
 
-
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install mariadb-server
 
 RUN mysql_dirs="/var/lib/mysql /var/lib/mysql-files /var/lib/mysql-keyring /var/run/mysqld"
@@ -63,7 +62,6 @@ RUN curl -sS https://getcomposer.org/installer | php \
         && mv composer.phar /usr/local/bin/ \
         && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 ENV PATH="~/.composer/vendor/bin:./vendor/bin:${PATH}"
-
 
 # Install xdebug. ver 3.1
 RUN cd /tmp/ && wget http://xdebug.org/files/xdebug-3.1.0.tgz && tar -xvzf xdebug-3.1.0.tgz && cd xdebug-3.1.0/ && phpize && ./configure --enable-xdebug --with-php-config=/usr/local/bin/php-config && make && make install
@@ -147,7 +145,7 @@ RUN echo "exec su - web" > /root/.bashrc && \
 # Download RetroSeller, Update and General Models
 RUN git clone https://github.com/louisvarley/RetroSeller /var/www/html
 
-RUN chown -r www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /var/www/html
 RUN chmod -R 774 /var/www
 
 WORKDIR /var/www/html
